@@ -282,41 +282,48 @@
     </main>
 
     <footer>
-        <div class="footer-grid">
-            <div class="footer-info">
-                <img src="logo.png" alt="Logo">
-                <p>El centro de servicios automotrices más completo de la región. Calidad, confianza y rapidez en un solo lugar.</p>
+        <div class="footer-top">
+            <div class="footer-brand">
+                <img src="logo.png" alt="Autocentro Logo">
+                <p>El centro de servicios automotrices más completo de la región.</p>
+                <a href="https://wa.me/5493515929043" target="_blank" class="footer-wa-btn">
+                    <i class="fab fa-whatsapp"></i> Escribinos ahora
+                </a>
             </div>
-            <div class="footer-links">
-                <h4>Servicios</h4>
-                <ul>
-                    <li><a href="#">Neumáticos</a></li>
-                    <li><a href="#">Alineación</a></li>
-                    <li><a href="#">Balanceo</a></li>
-                    <li><a href="#">Frenos</a></li>
-                </ul>
-            </div>
-            <div class="footer-links">
-                <h4>Navegación</h4>
-                <ul>
-                    <li><a href="#inicio">Inicio</a></li>
-                    <li><a href="#servicios">Servicios</a></li>
-                    <li><a href="#nosotros">Nosotros</a></li>
-                    <li><a href="#contacto">Contacto</a></li>
-                </ul>
-            </div>
-            <div class="footer-links">
-                <h4>Contacto</h4>
-                <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 1rem;">
-                    <i class="fas fa-map-marker-alt" style="color: var(--primary); margin-right: 10px;"></i> Av. Principal 1234, Ciudad<br>
-                    <i class="fas fa-phone" style="color: var(--primary); margin-right: 10px;"></i> +54 9 11 1234 5678<br>
-                    <i class="fas fa-envelope" style="color: var(--primary); margin-right: 10px;"></i> info@autocentro.com
-                </p>
+
+            <div class="footer-cols">
+                <div class="footer-col">
+                    <h5>Servicios</h5>
+                    <ul>
+                        <li><a href="#" onclick="openCheckout('Neumáticos','SERVICIOS');return false;">Neumáticos</a></li>
+                        <li><a href="#" onclick="openCheckout('Alineación 3D','SERVICIOS');return false;">Alineación 3D</a></li>
+                        <li><a href="#" onclick="openCheckout('Suspensión','SERVICIOS');return false;">Suspensión</a></li>
+                        <li><a href="#" onclick="openCheckout('Frenos','SERVICIOS');return false;">Frenos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Navegación</h5>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#nosotros">Nosotros</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Contacto</h5>
+                    <ul class="footer-contact-list">
+                        <li><i class="fas fa-map-marker-alt"></i> Av. Principal 1234, Córdoba</li>
+                        <li><i class="fas fa-phone"></i> 351 592 9043</li>
+                        <li><i class="fas fa-clock"></i> Lun–Sáb 8:00–18:00</li>
+                    </ul>
+                </div>
             </div>
         </div>
-        <div class="bottom-footer">
-            <p>&copy; 2026 AUTOCENTRO. Todos los derechos reservados.</p>
-            <p>Diseño por Antigravity AI</p>
+
+        <div class="footer-bottom">
+            <span>© 2026 HOBBY Autocentro. Todos los derechos reservados.</span>
+            <span style="color:#333;">Hecho con ♥ por Antigravity AI</span>
         </div>
     </footer>
 
