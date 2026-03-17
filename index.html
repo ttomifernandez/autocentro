@@ -19,29 +19,73 @@
         <div class="logo">
             <img src="logo.png" alt="Autocentro Logo">
         </div>
-        <nav>
-            <ul>
+        
+        <!-- Desktop Nav -->
+        <nav class="desktop-nav">
+            <ul id="mainMenu">
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#servicios">Servicios</a></li>
                 <li><a href="#nosotros">Nosotros</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
         </nav>
-        <button onclick="openModal()" class="cta-btn">Turnos Online</button>
+
+        <div class="header-actions">
+            <button onclick="openModal()" class="cta-btn">Turnos Online</button>
+            <button id="menuToggle" class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
     </header>
+
+    <!-- Mobile Nav Drawer -->
+    <div id="mobileMenu" class="mobile-drawer">
+        <button id="closeDrawer" class="close-btn">✕</button>
+        <ul id="mobileMenuList">
+            <li><a href="#inicio" onclick="toggleMenu()">Inicio</a></li>
+            <li><a href="#servicios" onclick="toggleMenu()">Servicios</a></li>
+            <li><a href="#nosotros" onclick="toggleMenu()">Nosotros</a></li>
+            <li><a href="#contacto" onclick="toggleMenu()">Contacto</a></li>
+            <li class="admin-link"><a href="#" onclick="openLogin()">ADMIN</a></li>
+        </ul>
+    </div>
 
     <!-- Modal de Turnos -->
     <div id="serviceModal" class="modal">
         <div class="modal-content">
             <button id="closeModal" onclick="closeModal()">✕</button>
-            <h3 style="color: var(--primary); margin-bottom: 1rem;">¿Qué servicio necesitas?</h3>
-            <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 2rem;">Selecciona una opción para coordinar tu turno.</p>
-            <div style="display: flex; flex-direction: column; gap: 1rem;">
-                <button class="admin-btn" style="text-align: left; padding: 1rem;" onclick="redirectToWhatsApp('Neumáticos')">Neumáticos</button>
-                <button class="admin-btn" style="text-align: left; padding: 1rem;" onclick="redirectToWhatsApp('Alineación 3D')">Alineación 3D</button>
-                <button class="admin-btn" style="text-align: left; padding: 1rem;" onclick="redirectToWhatsApp('Suspensión')">Suspensión</button>
-                <button class="admin-btn" style="text-align: left; padding: 1rem;" onclick="redirectToWhatsApp('Consulta General')">Otros / Consulta</button>
+            <h3 style="color: var(--primary); margin-bottom: 1rem;">Solicitar Turno</h3>
+            <div class="contact-form" style="padding: 0; background: transparent; border: none;">
+                <div class="form-group">
+                    <label>Tu Nombre</label>
+                    <input type="text" id="modalName" placeholder="Juan Perez">
+                </div>
+                <div class="form-group">
+                    <label>Motivo / Mensaje</label>
+                    <textarea id="modalMsg" rows="3" placeholder="Ej: Necesito alineación para mañana a las 10hs"></textarea>
+                </div>
+                <button class="cta-btn" style="width: 100%;" onclick="sendModalWhatsApp()">Enviar por WhatsApp</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content" style="max-width: 350px;">
+            <button onclick="closeLogin()" id="closeModal">✕</button>
+            <h3 style="color: var(--primary); margin-bottom: 1.5rem; text-align: center;">Acceso Admin</h3>
+            <div class="form-group">
+                <label>Usuario</label>
+                <input type="text" id="userLogin" value="admin">
+            </div>
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" id="passLogin" value="admin">
+            </div>
+            <button class="cta-btn" style="width: 100%;" onclick="checkLogin()">Entrar</button>
+            <p id="loginError" style="color: #ff4444; font-size: 0.8rem; margin-top: 1rem; display: none; text-align: center;">Credenciales incorrectas</p>
         </div>
     </div>
 

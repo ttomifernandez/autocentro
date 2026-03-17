@@ -112,6 +112,56 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
+    // --- Mobile Menu ---
+    const menuToggle = document.getElementById('menuToggle');
+    const closeDrawer = document.getElementById('closeDrawer');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    window.toggleMenu = () => mobileMenu.classList.toggle('active');
+    if (menuToggle) menuToggle.onclick = toggleMenu;
+    if (closeDrawer) closeDrawer.onclick = toggleMenu;
+
+    // --- Admin Login ---
+    window.openLogin = () => {
+        toggleMenu();
+        document.getElementById('loginModal').classList.add('active');
+    };
+    window.closeLogin = () => document.getElementById('loginModal').classList.remove('active');
+    
+    window.checkLogin = () => {
+        const user = document.getElementById('userLogin').value;
+        const pass = document.getElementById('passLogin').value;
+        const error = document.getElementById('loginError');
+
+        if(user === 'admin' && pass === 'admin') {
+            window.location.href = 'admin.html';
+        } else {
+            error.style.display = 'block';
+        }
+    };
+
+    // --- Turnos Modal ---
+    window.openModal = () => document.getElementById('serviceModal').classList.add('active');
+    window.closeModal = () => document.getElementById('serviceModal').classList.remove('active');
+
+    window.sendModalWhatsApp = () => {
+        const name = document.getElementById('modalName').value;
+        const msg = document.getElementById('modalMsg').value;
+
+        if(!name || !msg) {
+            alert('Por favor completa tu nombre y el mensaje');
+            return;
+        }
+
+        // Save Lead
+        saveLead(name, 'Consulta por Turno', msg);
+
+        const text = `Hola Autocentro! Mi nombre es *${name}*.\nConsulta: ${msg}`;
+        const encoded = encodeURIComponent(text);
+        window.open(`https://wa.me/5493515929043?text=${encoded}`, '_blank');
+        closeModal();
+    };
+
     function saveLead(name, vehicle, interest) {
         const lead = {
             name,
@@ -119,21 +169,11 @@ document.addEventListener('DOMContentLoaded', () => {
             interest,
             date: new Date().toLocaleDateString()
         };
-        const curState = JSON.parse(localStorage.getItem('autocentro_state')) || defaultState;
+        const curState = JSON.parse(localStorage.getItem('autocentro_state')) || { leads: [] };
         if (!curState.leads) curState.leads = [];
         curState.leads.push(lead);
         localStorage.setItem('autocentro_state', JSON.stringify(curState));
     }
-
-    window.redirectToWhatsApp = (service) => {
-        closeModal();
-        const text = `Hola Autocentro! Quisiera solicitar un turno para: *${service}*`;
-        const encoded = encodeURIComponent(text);
-        window.open(`https://wa.me/5493515929043?text=${encoded}`, '_blank');
-    };
-
-    window.openModal = () => document.getElementById('serviceModal').classList.add('active');
-    window.closeModal = () => document.getElementById('serviceModal').classList.remove('active');
 
     window.orderProduct = (name) => {
         document.getElementById('formInterest').value = name;
