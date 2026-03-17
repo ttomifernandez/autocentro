@@ -60,37 +60,43 @@
         </div>
     </div>
 
-    <!-- Modal de Turnos -->
-    <div id="serviceModal" class="modal">
-        <div class="modal-content">
-            <button id="closeModal" onclick="closeModal()">✕</button>
-            <h3 style="color: var(--primary); margin-bottom: 1rem;">Solicitar Turno</h3>
-            <div class="contact-form" style="padding: 0; background: transparent; border: none;">
-                <div class="form-group">
-                    <label>Tu Nombre</label>
-                    <input type="text" id="modalName" placeholder="Juan Perez">
-                </div>
-                <div class="form-group">
-                    <label>Motivo / Mensaje</label>
-                    <textarea id="modalMsg" rows="3" placeholder="Ej: Necesito alineación para mañana a las 10hs"></textarea>
-                </div>
-                <button class="cta-btn" style="width: 100%;" onclick="sendModalWhatsApp()">Enviar por WhatsApp</button>
+    <!-- ── CHECKOUT MODAL (Universal) ──────────────── -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content" style="max-width: 420px;">
+            <button onclick="closeCheckout()" style="position:absolute; top:15px; right:15px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">✕</button>
+            <span id="checkoutBadge" style="display:inline-block; font-size:0.65rem; font-weight:700; letter-spacing:0.15em; color:var(--primary); text-transform:uppercase; margin-bottom:0.5rem;"></span>
+            <h3 id="checkoutTitle" style="color:#fff; font-family:'Outfit',sans-serif; font-size:1.3rem; margin-bottom:0.25rem;"></h3>
+            <p style="font-size:0.78rem; color:var(--text-gray); margin-bottom:1.8rem;">Dejanos tus datos y te contactamos en minutos por WhatsApp.</p>
+            <div class="form-group">
+                <label>Tu Nombre</label>
+                <input type="text" id="ckName" placeholder="Ej: Juan Pérez">
             </div>
+            <div class="form-group">
+                <label>Teléfono / WhatsApp</label>
+                <input type="tel" id="ckPhone" placeholder="Ej: 351 123 4567">
+            </div>
+            <div class="form-group" id="ckMessageGroup">
+                <label>Mensaje adicional (opcional)</label>
+                <textarea id="ckMessage" rows="2" placeholder="¿Alguna consulta extra?"></textarea>
+            </div>
+            <button class="cta-btn" style="width:100%; margin-top:0.5rem;" onclick="submitCheckout()">
+                <i class="fab fa-whatsapp" style="margin-right:6px;"></i> Enviar Pedido por WhatsApp
+            </button>
         </div>
     </div>
 
     <!-- Login Modal -->
     <div id="loginModal" class="modal">
         <div class="modal-content" style="max-width: 350px;">
-            <button onclick="closeLogin()" id="closeModal">✕</button>
+            <button onclick="closeLogin()" style="position:absolute; top:15px; right:15px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">✕</button>
             <h3 style="color: var(--primary); margin-bottom: 1.5rem; text-align: center;">Acceso Admin</h3>
             <div class="form-group">
                 <label>Usuario</label>
-                <input type="text" id="userLogin" value="admin">
+                <input type="text" id="userLogin" placeholder="admin">
             </div>
             <div class="form-group">
                 <label>Contraseña</label>
-                <input type="password" id="passLogin" value="admin">
+                <input type="password" id="passLogin" placeholder="••••••">
             </div>
             <button class="cta-btn" style="width: 100%;" onclick="checkLogin()">Entrar</button>
             <p id="loginError" style="color: #ff4444; font-size: 0.8rem; margin-top: 1rem; display: none; text-align: center;">Credenciales incorrectas</p>
@@ -109,7 +115,8 @@
                 <h1>POTENCIA Y <span>PRECISIÓN</span></h1>
                 <p>Equipamiento de última generación y los mejores neumáticos para que tu única preocupación sea el camino.</p>
                 <div class="hero-actions">
-                    <a href="#servicios" class="cta-btn">Ver Servicios</a>
+                    <button class="cta-btn" onclick="openCheckout('Solicitar Turno', 'TURNOS ONLINE')">Solicitar Turno</button>
+                    <a href="#servicios" style="color:rgba(255,255,255,0.6); font-size:0.8rem; text-decoration:none; margin-left:1.5rem; letter-spacing:0.05em;">Ver Servicios ↓</a>
                 </div>
             </div>
         </section>
@@ -118,9 +125,15 @@
         <section id="promos" class="dynamic-sec">
             <div class="section-header" data-reveal>
                 <h2>Ofertas <span>Exclusivas</span></h2>
+                <div class="carousel-controls">
+                    <button class="carousel-btn" onclick="scrollCarousel('promos-container', -1)">&#8592;</button>
+                    <button class="carousel-btn" onclick="scrollCarousel('promos-container', 1)">&#8594;</button>
+                </div>
             </div>
-            <div id="promos-container" class="services-grid">
-                <!-- Injected via JS -->
+            <div class="carousel-wrapper">
+                <div id="promos-container" class="services-grid">
+                    <!-- Injected via JS -->
+                </div>
             </div>
         </section>
 
@@ -138,6 +151,7 @@
                     <div class="service-info">
                         <h3>Neumáticos</h3>
                         <p>Trabajamos con las marcas líderes del mercado. Venta, colocación y asesoramiento técnico especializado.</p>
+                        <button class="admin-btn" style="margin-top:1rem;" onclick="openCheckout('Neumáticos', 'SERVICIOS')">Consultar precio →</button>
                     </div>
                 </div>
 
@@ -148,6 +162,7 @@
                     <div class="service-info">
                         <h3>Alineación 3D</h3>
                         <p>Tecnología láser de alta precisión para asegurar un desgaste parejo y una conducción estable.</p>
+                        <button class="admin-btn" style="margin-top:1rem;" onclick="openCheckout('Alineación 3D', 'SERVICIOS')">Consultar precio →</button>
                     </div>
                 </div>
 
@@ -158,6 +173,7 @@
                     <div class="service-info">
                         <h3>Suspensión y Tren Delantero</h3>
                         <p>Revisión exhaustiva y reparación de sistemas de suspensión para tu máxima seguridad.</p>
+                        <button class="admin-btn" style="margin-top:1rem;" onclick="openCheckout('Suspensión', 'SERVICIOS')">Consultar precio →</button>
                     </div>
                 </div>
             </div>
@@ -193,6 +209,10 @@
         <section id="productos" class="dynamic-sec">
             <div class="section-header" data-reveal>
                 <h2>Catálogo de <span>Productos</span></h2>
+                <div class="carousel-controls">
+                    <button class="carousel-btn" onclick="scrollCarousel('products-grid', -1)">&#8592;</button>
+                    <button class="carousel-btn" onclick="scrollCarousel('products-grid', 1)">&#8594;</button>
+                </div>
             </div>
             
             <div class="filter-bar" data-reveal>
@@ -205,8 +225,10 @@
                 </select>
             </div>
 
-            <div id="products-grid" class="services-grid">
-                <!-- Injected via JS -->
+            <div class="carousel-wrapper">
+                <div id="products-grid" class="services-grid">
+                    <!-- Injected via JS -->
+                </div>
             </div>
         </section>
 

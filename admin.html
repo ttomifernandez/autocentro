@@ -192,10 +192,12 @@
             `).join('');
 
             const leadsTable = document.getElementById('leadsTable');
-            leadsTable.innerHTML = (state.leads || []).map((l, i) => `
-                <div class="prod-item" style="grid-template-columns: 1fr 1fr 1fr 100px; display: grid; align-items: center; font-size: 0.8rem;">
+            leadsTable.innerHTML = (state.leads || []).length === 0
+                ? `<p style="color:var(--text-gray); font-size:0.8rem; padding:1rem 0;">Aún no hay contactos registrados.</p>`
+                : (state.leads || []).map((l, i) => `
+                <div class="prod-item" style="display: grid; grid-template-columns: 1fr 1fr 1fr 100px; align-items: center; font-size: 0.8rem;">
                     <span style="color: var(--text-gray)">${l.date}</span>
-                    <span><b>${l.name}</b><br><small>${l.vehicle}</small></span>
+                    <span><b>${l.name}</b><br><small style="color:var(--text-gray)">${l.phone || l.vehicle || ''}</small></span>
                     <span style="color: var(--primary)">${l.interest}</span>
                     <button class="admin-btn" onclick="removeLead(${i})">Borrar</button>
                 </div>

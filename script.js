@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="service-info" style="padding: 1.5rem;">
                     <span style="font-size: 0.65rem; color: var(--primary); letter-spacing: 0.15em; font-weight: 700; text-transform: uppercase;">Promoción</span>
                     <h3 style="font-size: 1.1rem; margin: 0.5rem 0; line-height: 1.2;">${p.title}</h3>
-                    <a href="#contacto" class="cta-btn" style="width: 100%; display: block; text-align: center; margin-top: 1rem; font-size: 0.7rem;">Me interesa</a>
+                    <button class="cta-btn" style="width: 100%; display: block; text-align: center; margin-top: 1rem; font-size: 0.7rem;" onclick="openCheckout('${p.title.replace(/'/g, "\\'").replace(/"/g, '&quot;')}', 'PROMO')">Me interesa</button>
                 </div>
             </div>
         `).join('');
@@ -80,10 +80,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     <img src="${p.img}" alt="${p.title}">
                 </div>
                 <div class="service-info">
-                    <span style="font-size: 0.7rem; color: var(--primary); text-transform: uppercase;">${p.category}</span>
+                    <span style="font-size: 0.65rem; color: var(--primary); letter-spacing: 0.1em; font-weight: 700; text-transform: uppercase;">${p.category}</span>
                     <h3>${p.title}</h3>
                     <p>${p.desc}</p>
-                    <button class="cta-btn" style="margin-top: 1rem; width: 100%;" onclick="orderProduct('${p.title}')">Pedir Presupuesto</button>
+                    <button class="cta-btn" style="margin-top: 1rem; width: 100%; font-size: 0.72rem;" onclick="openCheckout('${p.title.replace(/'/g, "\\'").replace(/"/g, '&quot;')}', 'CATÁLOGO')">
+                        Pedir Presupuesto
+                    </button>
                 </div>
             </div>
         `).join('');
@@ -146,7 +148,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const user = document.getElementById('userLogin').value;
         const pass = document.getElementById('passLogin').value;
         const error = document.getElementById('loginError');
-
         if(user === 'admin' && pass === 'admin') {
             window.location.href = 'admin.html';
         } else {
@@ -154,35 +155,55 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // --- Turnos Modal ---
-    window.openModal = () => document.getElementById('serviceModal').classList.add('active');
-    window.closeModal = () => document.getElementById('serviceModal').classList.remove('active');
+    // ── CHECKOUT UNIVERSAL ───────────────────────────────
+    let _checkoutContext = ''; // stores what interest/product was clicked
 
-    window.sendModalWhatsApp = () => {
-        const name = document.getElementById('modalName').value;
-        const msg = document.getElementById('modalMsg').value;
+    window.openCheckout = (interest, badge) => {
+        _checkoutContext = interest || 'Consulta General';
+        document.getElementById('checkoutTitle').textContent = interest || 'Solicitar Turno';
+        document.getElementById('checkoutBadge').textContent = badge || 'TURNOS ONLINE';
+        document.getElementById('ckName').value = '';
+        document.getElementById('ckPhone').value = '';
+        document.getElementById('ckMessage').value = '';
+        document.getElementById('checkoutModal').classList.add('active');
+    };
 
-        if(!name || !msg) {
-            alert('Por favor completa tu nombre y el mensaje');
+    window.closeCheckout = () => document.getElementById('checkoutModal').classList.remove('active');
+
+    // Alias for "Turnos Online" button in header
+    window.openModal = () => openCheckout('Solicitar Turno', 'TURNOS ONLINE');
+
+    window.submitCheckout = () => {
+        const name  = document.getElementById('ckName').value.trim();
+        const phone = document.getElementById('ckPhone').value.trim();
+        const msg   = document.getElementById('ckMessage').value.trim();
+
+        if (!name || !phone) {
+            alert('Por favor completá tu nombre y teléfono.');
             return;
         }
 
-        // Save Lead
-        saveLead(name, 'Consulta por Turno', msg);
+        // Save lead
+        saveLead(name, phone, _checkoutContext);
 
-        const text = `Hola Autocentro! Mi nombre es *${name}*.\nConsulta: ${msg}`;
-        const encoded = encodeURIComponent(text);
-        window.open(`https://wa.me/5493515929043?text=${encoded}`, '_blank');
-        closeModal();
+        // Compose WhatsApp message
+        const text = [
+            `Hola Autocentro! 👋`,
+            `Nombre: *${name}*`,
+            `Tel: *${phone}*`,
+            `Consulta: *${_checkoutContext}*`,
+            msg ? `Mensaje: ${msg}` : ''
+        ].filter(Boolean).join('\n');
+
+        window.open(`https://wa.me/5493515929043?text=${encodeURIComponent(text)}`, '_blank');
+        closeCheckout();
     };
 
-    function saveLead(name, vehicle, interest) {
-        const lead = {
-            name,
-            vehicle,
-            interest,
-            date: new Date().toLocaleDateString()
-        };
+    // Legacy shortcut used by contact form
+    window.orderProduct = (name) => openCheckout(name, 'CATÁLOGO');
+
+    function saveLead(name, phone, interest) {
+        const lead = { name, phone, interest, date: new Date().toLocaleDateString() };
         const curState = JSON.parse(localStorage.getItem('autocentro_state')) || { leads: [] };
         if (!curState.leads) curState.leads = [];
         curState.leads.push(lead);
@@ -193,6 +214,27 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('formInterest').value = name;
         document.querySelector('#contacto').scrollIntoView({ behavior: 'smooth' });
     };
+
+    // --- Carousel Controls ---
+    window.scrollCarousel = (id, dir) => {
+        const track = document.getElementById(id);
+        if (!track) return;
+        const card = track.querySelector('.service-card');
+        const cardWidth = card ? card.offsetWidth + 20 : 300; // 20 = gap
+        track.scrollBy({ left: dir * cardWidth * 2, behavior: 'smooth' });
+    };
+
+    // Touch/swipe support for carousels
+    document.querySelectorAll('.services-grid').forEach(track => {
+        let startX = 0;
+        track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+        track.addEventListener('touchend', e => {
+            const diff = startX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) {
+                track.scrollBy({ left: diff * 2, behavior: 'smooth' });
+            }
+        }, { passive: true });
+    });
 
     // --- Existing Visual Logic ---
     window.addEventListener('scroll', () => {
