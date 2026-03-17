@@ -103,11 +103,37 @@ document.addEventListener('DOMContentLoaded', () => {
             const interest = document.getElementById('formInterest').value;
             const msg = document.getElementById('formMessage').value;
 
+            // Save Lead
+            saveLead(name, vehicle, interest);
+
             const text = `Hola Autocentro! Mi nombre es *${name}*.\nEstoy interesado en: *${interest}*.\nVehículo: *${vehicle}*.\nMensaje: ${msg}`;
             const encoded = encodeURIComponent(text);
-            window.open(`https://wa.me/5491112223334?text=${encoded}`, '_blank');
+            window.open(`https://wa.me/5493515929043?text=${encoded}`, '_blank');
         };
     }
+
+    function saveLead(name, vehicle, interest) {
+        const lead = {
+            name,
+            vehicle,
+            interest,
+            date: new Date().toLocaleDateString()
+        };
+        const curState = JSON.parse(localStorage.getItem('autocentro_state')) || defaultState;
+        if (!curState.leads) curState.leads = [];
+        curState.leads.push(lead);
+        localStorage.setItem('autocentro_state', JSON.stringify(curState));
+    }
+
+    window.redirectToWhatsApp = (service) => {
+        closeModal();
+        const text = `Hola Autocentro! Quisiera solicitar un turno para: *${service}*`;
+        const encoded = encodeURIComponent(text);
+        window.open(`https://wa.me/5493515929043?text=${encoded}`, '_blank');
+    };
+
+    window.openModal = () => document.getElementById('serviceModal').classList.add('active');
+    window.closeModal = () => document.getElementById('serviceModal').classList.remove('active');
 
     window.orderProduct = (name) => {
         document.getElementById('formInterest').value = name;

@@ -27,8 +27,23 @@
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
         </nav>
-        <a href="https://wa.me/5491112223334" class="cta-btn">Turnos Online</a>
+        <button onclick="openModal()" class="cta-btn">Turnos Online</button>
     </header>
+
+    <!-- Modal de Turnos -->
+    <div id="serviceModal" class="modal">
+        <div class="modal-content">
+            <button id="closeModal" onclick="closeModal()">✕</button>
+            <h3 style="color: var(--primary); margin-bottom: 1rem;">¿Qué servicio necesitas?</h3>
+            <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 2rem;">Selecciona una opción para coordinar tu turno.</p>
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <button class="admin-btn" style="text-align: left; padding: 1rem;" onclick="redirectToWhatsApp('Neumáticos')">Neumáticos</button>
+                <button class="admin-btn" style="text-align: left; padding: 1rem;" onclick="redirectToWhatsApp('Alineación 3D')">Alineación 3D</button>
+                <button class="admin-btn" style="text-align: left; padding: 1rem;" onclick="redirectToWhatsApp('Suspensión')">Suspensión</button>
+                <button class="admin-btn" style="text-align: left; padding: 1rem;" onclick="redirectToWhatsApp('Consulta General')">Otros / Consulta</button>
+            </div>
+        </div>
+    </div>
 
     <main>
         <section id="inicio" class="hero">

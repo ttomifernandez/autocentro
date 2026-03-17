@@ -29,7 +29,27 @@
                     <span id="stat-products">0</span>
                     <label>Productos</label>
                 </div>
+                <div class="dashboard-stat">
+                    <span id="stat-leads">0</span>
+                    <label>Leads</label>
+                </div>
             </div>
+        </div>
+
+        <div class="admin-grid" style="grid-template-columns: 1fr;">
+            <!-- Leads Management Section -->
+            <section class="admin-card">
+                <h3>Base de Datos de Contactos (Leads)</h3>
+                <div id="adminLeadsList" style="margin-top: 1rem;">
+                    <div class="admin-list-header" style="display: grid; grid-template-columns: 1fr 1fr 1fr 100px;">
+                        <span>Fecha</span>
+                        <span>Nombre / Vehículo</span>
+                        <span>Interés</span>
+                        <span>Acción</span>
+                    </div>
+                    <div id="leadsTable"></div>
+                </div>
+            </section>
         </div>
 
         <div class="admin-grid">
@@ -123,12 +143,12 @@
     </main>
 
     <script>
-        // Data Management con persistencia mejorada
         let state = JSON.parse(localStorage.getItem('autocentro_state')) || {
             promos_active: false,
             promos: [],
             products_active: false,
-            products: []
+            products: [],
+            leads: []
         };
 
         function save() {
@@ -143,6 +163,7 @@
             // Actualizar Stats
             document.getElementById('stat-promos').innerText = state.promos.length;
             document.getElementById('stat-products').innerText = state.products.length;
+            document.getElementById('stat-leads').innerText = (state.leads || []).length;
 
             const pList = document.getElementById('adminPromosList');
             pList.innerHTML = state.promos.map((p, i) => `
@@ -152,6 +173,16 @@
                         <span style="font-size: 0.8rem;">${p.title}</span>
                     </div>
                     <button class="admin-btn" onclick="removePromo(${i})">✕</button>
+                </div>
+            `).join('');
+
+            const leadsTable = document.getElementById('leadsTable');
+            leadsTable.innerHTML = (state.leads || []).map((l, i) => `
+                <div class="prod-item" style="grid-template-columns: 1fr 1fr 1fr 100px; display: grid; align-items: center; font-size: 0.8rem;">
+                    <span style="color: var(--text-gray)">${l.date}</span>
+                    <span><b>${l.name}</b><br><small>${l.vehicle}</small></span>
+                    <span style="color: var(--primary)">${l.interest}</span>
+                    <button class="admin-btn" onclick="removeLead(${i})">Borrar</button>
                 </div>
             `).join('');
 
@@ -203,6 +234,11 @@
 
         function removeProduct(i) {
             state.products.splice(i, 1);
+            save();
+        }
+
+        function removeLead(i) {
+            state.leads.splice(i, 1);
             save();
         }
 

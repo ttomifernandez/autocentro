@@ -657,6 +657,17 @@ footer {
   header {
     padding: 1rem 5%;
     background: rgba(10, 10, 10, 0.95);
+    flex-direction: row; /* Ensure row on mobile */
+    justify-content: space-between;
+  }
+  
+  .logo img {
+    height: 35px; /* Adjust for mobile */
+  }
+
+  .cta-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.75rem;
   }
   
   nav {
@@ -679,4 +690,41 @@ footer {
         var(--bg-dark)
     );
   }
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: 3000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(5px);
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--bg-card);
+    padding: 2.5rem;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid var(--primary);
+    position: relative;
+}
+
+#closeModal {
+    position: absolute;
+    top: 15px; right: 15px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
 }
