@@ -15,10 +15,15 @@
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
+
 body {
   background-color: var(--bg-dark);
   color: var(--text-white);
-  overflow-x: hidden;
 }
 
 /* Scrollbar */
@@ -655,19 +660,26 @@ footer {
   }
   
   header {
-    padding: 1rem 5%;
-    background: rgba(10, 10, 10, 0.95);
-    flex-direction: row; /* Ensure row on mobile */
+    padding: 0.8rem 4%;
+    background: rgba(10, 10, 10, 0.98);
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    gap: 10px;
   }
   
   .logo img {
-    height: 35px; /* Adjust for mobile */
+    height: 28px; /* Slightly smaller to fit better */
+    max-width: 120px;
+    object-fit: contain;
   }
 
   .cta-btn {
-    padding: 0.6rem 1rem;
-    font-size: 0.75rem;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.7rem;
+    white-space: nowrap; /* Prevent button text wrapping */
+    flex-shrink: 0;
   }
   
   nav {
