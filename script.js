@@ -4,10 +4,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- State Management (LocalStorage) ---
     const defaultState = {
-        promos_active: false,
-        promos: [],
-        products_active: false,
-        products: []
+        promos_active: true,
+        promos: [
+            { title: "20% OFF en Alineación 3D", img: "service2.png" },
+            { title: "Kit de Suspensión -15%", img: "service3.png" },
+            { title: "4x3 en Neumáticos Michelin", img: "service1.png" },
+            { title: "Chequeo Preventivo Gratis", img: "service2.png" },
+            { title: "Cambio de Aceite Promo", img: "service3.png" },
+            { title: "Balanceo de Regalo", img: "service1.png" }
+        ],
+        products_active: true,
+        products: [
+            { title: "Pirelli Scorpion", desc: "Máximo agarre en terrenos difíciles.", category: "Neumáticos", img: "service1.png" },
+            { title: "Michelin Primacy 4", desc: "Seguridad duradera y eficiencia.", category: "Neumáticos", img: "service1.png" },
+            { title: "Bridgestone Turanza", desc: "Confort premium en cada viaje.", category: "Neumáticos", img: "service1.png" },
+            { title: "Llantas Deportivas R17", desc: "Diseño aerodinámico y resistente.", category: "Llantas", img: "service2.png" },
+            { title: "Amortiguadores Monroe", desc: "Estabilidad controlada y suave.", category: "Servicios", img: "service3.png" },
+            { title: "Kit de Frenos Brembo", desc: "Frenado de alta performance.", category: "Servicios", img: "service3.png" }
+        ],
+        leads: []
     };
     const state = JSON.parse(localStorage.getItem('autocentro_state')) || defaultState;
 
@@ -21,19 +36,18 @@ document.addEventListener('DOMContentLoaded', () => {
         promosSec.classList.add('active');
         const li = document.createElement('li');
         li.innerHTML = '<a href="#promos">Promos</a>';
-        // Insert after 'Inicio'
         menuUl.insertBefore(li, menuUl.children[1]);
 
         const container = document.getElementById('promos-container');
         container.innerHTML = state.promos.map(p => `
-            <div class="service-card" style="border-color: var(--primary);">
+            <div class="service-card" style="border-color: rgba(var(--primary-rgb), 0.2);">
                 <div class="service-img">
                     <img src="${p.img || 'service1.png'}" alt="Promo">
                 </div>
-                <div class="service-info">
-                    <h3 style="color: var(--primary); margin: 0; font-size: 0.8rem;">OFERTA LIMITADA</h3>
-                    <p style="font-size: 1.4rem; font-weight: 800; color: #fff; margin: 0.5rem 0;">${p.title}</p>
-                    <a href="#contacto" class="cta-btn" style="margin-top: 10px; display: block; text-align: center; font-size: 0.7rem; padding: 0.5rem;">Lo quiero</a>
+                <div class="service-info" style="padding: 1.5rem;">
+                    <span style="font-size: 0.65rem; color: var(--primary); letter-spacing: 0.15em; font-weight: 700; text-transform: uppercase;">Promoción</span>
+                    <h3 style="font-size: 1.1rem; margin: 0.5rem 0; line-height: 1.2;">${p.title}</h3>
+                    <a href="#contacto" class="cta-btn" style="width: 100%; display: block; text-align: center; margin-top: 1rem; font-size: 0.7rem;">Me interesa</a>
                 </div>
             </div>
         `).join('');

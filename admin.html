@@ -11,27 +11,27 @@
         <div class="logo">
             <img src="logo.png" alt="Autocentro Logo">
         </div>
-        <div style="display: flex; gap: 1rem; align-items: center;">
-            <span style="font-size: 0.8rem; color: var(--text-gray);">MODO ADMINISTRADOR</span>
-            <a href="index.html" class="cta-btn">Ver Web</a>
+        <div style="display: flex; gap: 1.5rem; align-items: center;">
+            <span style="font-size: 0.75rem; color: var(--text-gray); letter-spacing: 0.1em; font-weight: 600;">MODO ADMINISTRADOR</span>
+            <a href="index.html" class="cta-btn">Finalizar Edición</a>
         </div>
     </header>
 
     <main class="admin-panel">
         <div class="admin-header">
-            <h1 style="font-family: 'Outfit'; font-weight: 900; text-transform: uppercase;">Dashboard <span style="color: var(--primary);">Pro</span></h1>
-            <div style="display: flex; gap: 1rem;">
+            <h2>Dashboard <span style="color: var(--primary);">System</span></h2>
+            <div class="dashboard-stats">
                 <div class="dashboard-stat">
                     <span id="stat-promos">0</span>
-                    <label>Promociones</label>
+                    <label>Ofertas Activas</label>
                 </div>
                 <div class="dashboard-stat">
                     <span id="stat-products">0</span>
-                    <label>Productos</label>
+                    <label>Unidades Catálogo</label>
                 </div>
                 <div class="dashboard-stat">
                     <span id="stat-leads">0</span>
-                    <label>Leads</label>
+                    <label>Nuevos Contactos</label>
                 </div>
             </div>
         </div>
@@ -143,13 +143,28 @@
     </main>
 
     <script>
-        let state = JSON.parse(localStorage.getItem('autocentro_state')) || {
-            promos_active: false,
-            promos: [],
-            products_active: false,
-            products: [],
+        const defaultState = {
+            promos_active: true,
+            promos: [
+                { title: "20% OFF en Alineación 3D", img: "service2.png" },
+                { title: "Kit de Suspensión -15%", img: "service3.png" },
+                { title: "4x3 en Neumáticos Michelin", img: "service1.png" },
+                { title: "Chequeo Preventivo Gratis", img: "service2.png" },
+                { title: "Cambio de Aceite Promo", img: "service3.png" },
+                { title: "Balanceo de Regalo", img: "service1.png" }
+            ],
+            products_active: true,
+            products: [
+                { title: "Pirelli Scorpion", desc: "Máximo agarre en terrenos difíciles.", category: "Neumáticos", img: "service1.png" },
+                { title: "Michelin Primacy 4", desc: "Seguridad duradera y eficiencia.", category: "Neumáticos", img: "service1.png" },
+                { title: "Bridgestone Turanza", desc: "Confort premium en cada viaje.", category: "Neumáticos", img: "service1.png" },
+                { title: "Llantas Deportivas R17", desc: "Diseño aerodinámico y resistente.", category: "Llantas", img: "service2.png" },
+                { title: "Amortiguadores Monroe", desc: "Estabilidad controlada y suave.", category: "Servicios", img: "service3.png" },
+                { title: "Kit de Frenos Brembo", desc: "Frenado de alta performance.", category: "Servicios", img: "service3.png" }
+            ],
             leads: []
         };
+        let state = JSON.parse(localStorage.getItem('autocentro_state')) || defaultState;
 
         function save() {
             localStorage.setItem('autocentro_state', JSON.stringify(state));
