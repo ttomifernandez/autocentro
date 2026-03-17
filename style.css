@@ -664,6 +664,19 @@ footer {
   }
   
   .hero-content h1 {
-    font-size: 3.5rem;
+    font-size: 2.8rem; /* Reducido para mejor ajuste en móvil */
+  }
+
+  .section-header h2 {
+    font-size: 2.2rem; /* Reducido para mejor ajuste en móvil */
+  }
+
+  .video-container::after {
+    background: rgba(0, 0, 0, 0.65); /* Más transparencia en móvil para ver mejor el video */
+    background: linear-gradient(
+        rgba(0, 0, 0, 0.75), 
+        rgba(0, 0, 0, 0.4), 
+        var(--bg-dark)
+    );
   }
 }
