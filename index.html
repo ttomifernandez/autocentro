@@ -40,16 +40,24 @@
         </div>
     </header>
 
-    <!-- Mobile Nav Drawer -->
     <div id="mobileMenu" class="mobile-drawer">
-        <button id="closeDrawer" class="close-btn">✕</button>
+        <button id="closeDrawer" class="close-btn"><i class="fas fa-times"></i></button>
+        <div class="drawer-header">
+            <img src="logo.png" alt="Logo" style="height: 50px; margin-bottom: 2rem;">
+        </div>
         <ul id="mobileMenuList">
-            <li><a href="#inicio" onclick="toggleMenu()">Inicio</a></li>
-            <li><a href="#servicios" onclick="toggleMenu()">Servicios</a></li>
-            <li><a href="#nosotros" onclick="toggleMenu()">Nosotros</a></li>
-            <li><a href="#contacto" onclick="toggleMenu()">Contacto</a></li>
-            <li class="admin-link"><a href="#" onclick="openLogin()">ADMIN</a></li>
+            <li><a href="#inicio" onclick="toggleMenu()"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="#servicios" onclick="toggleMenu()"><i class="fas fa-tools"></i> Servicios</a></li>
+            <li><a href="#nosotros" onclick="toggleMenu()"><i class="fas fa-users"></i> Nosotros</a></li>
+            <li><a href="#contacto" onclick="toggleMenu()"><i class="fas fa-envelope"></i> Contacto</a></li>
+            <li class="admin-link"><a href="#" onclick="openLogin()"><i class="fas fa-lock"></i> DASHBOARD</a></li>
         </ul>
+        <div class="drawer-footer">
+            <p>Contacto Directo</p>
+            <a href="https://wa.me/5493515929043" target="_blank" style="font-size: 1.1rem; color: #fff; font-weight: 700;">
+                <i class="fab fa-whatsapp" style="color: #25D366;"></i> 351 592 9043
+            </a>
+        </div>
     </div>
 
     <!-- Modal de Turnos -->
@@ -290,7 +298,6 @@
         </div>
     </footer>
 
-    <a href="admin.html" class="admin-badge">Admin Panel</a>
     <script src="script.js"></script>
 </body>
 </html>
