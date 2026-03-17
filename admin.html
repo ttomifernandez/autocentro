@@ -33,8 +33,19 @@
         </div>
 
         <div class="admin-grid">
-            <!-- Columna Izquierda: Configuración Global y Promos -->
+            <!-- Columna Izquierda: Importación y Promos -->
             <div style="display: flex; flex-direction: column; gap: 2rem;">
+                <section class="admin-card">
+                    <h3>Importar Catálogo (Excel)</h3>
+                    <p style="font-size: 0.8rem; color: var(--text-gray); margin-bottom: 1rem;">
+                        Sube un archivo .xlsx con las columnas: <b>Titulo, Descripcion, Categoria</b>
+                    </p>
+                    <div class="form-group">
+                        <input type="file" id="excelInput" accept=".xlsx, .xls, .csv" style="padding: 0.5rem; border: 1px dashed var(--primary); width: 100%;">
+                        <button class="admin-btn" style="width: 100%; margin-top: 1rem;" onclick="importExcel()">Procesar Archivo</button>
+                    </div>
+                </section>
+                <!-- ... existing sections ... -->
                 <section class="admin-card">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                         <h3 style="margin: 0;">Sección Promos</h3>
@@ -195,7 +206,41 @@
             save();
         }
 
+        function importExcel() {
+            const fileInput = document.getElementById('excelInput');
+            const file = fileInput.files[0];
+            if (!file) {
+                alert('Por favor selecciona un archivo');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, {type: 'array'});
+                const firstSheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[firstSheetName];
+                const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+                // Mapear datos de Excel a nuestro estado
+                const newProducts = jsonData.map(row => ({
+                    title: row.Titulo || row.titulo || 'Sin Título',
+                    desc: row.Descripcion || row.descripcion || '',
+                    category: row.Categoria || row.categoria || 'Neumáticos',
+                    img: 'service1.png' // Imagen por defecto
+                }));
+
+                state.products = [...state.products, ...newProducts];
+                save();
+                fileInput.value = '';
+                alert(`Se importaron ${newProducts.length} productos correctamente.`);
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
         render();
     </script>
+    <!-- Incluir SheetJS al final para asegurar carga -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </body>
 </html>
