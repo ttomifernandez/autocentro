@@ -780,18 +780,18 @@ input:checked + .slider:before { transform: translateX(30px); }
   }
   
   header {
-    padding: 0.8rem 4%;
+    padding: 1.2rem 4%;
     background: rgba(10, 10, 10, 0.98);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
   }
   
   .logo img {
-    height: 28px; /* Slightly smaller to fit better */
-    max-width: 120px;
+    height: 80px; /* Logo 3 veces más grande como solicitado */
+    max-width: 180px;
     object-fit: contain;
   }
 
