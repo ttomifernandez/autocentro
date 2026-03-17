@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUTOCENTRO | Especialistas en Neumáticos y Mecánica</title>
+    <meta name="description" content="Especialistas en neumáticos, alineación, balanceo y mecánica integral. Tecnología de vanguardia para tu vehículo.">
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=Outfit:wght@700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header id="header">
+        <div class="logo">
+            <img src="logo.png" alt="Autocentro Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+        <a href="https://wa.me/5491112223334" class="cta-btn">Turnos Online</a>
+    </header>
+
+    <main>
+        <section id="inicio" class="hero">
+            <div class="video-container">
+                <video autoplay muted loop playsinline id="heroVideo">
+                    <source src="hero.mp4" type="video/mp4">
+                    Tu navegador no soporta videos.
+                </video>
+            </div>
+            <div class="hero-content" data-reveal>
+                <h1>POTENCIA Y <span>PRECISIÓN</span></h1>
+                <p>Equipamiento de última generación y los mejores neumáticos para que tu única preocupación sea el camino.</p>
+                <div class="hero-actions">
+                    <a href="#servicios" class="cta-btn">Ver Servicios</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Promos Section (Dynamic) -->
+        <section id="promos" class="dynamic-sec">
+            <div class="section-header" data-reveal>
+                <h2>Ofertas <span>Exclusivas</span></h2>
+            </div>
+            <div id="promos-container" class="services-grid">
+                <!-- Injected via JS -->
+            </div>
+        </section>
+
+        <section id="servicios" class="services">
+            <div class="section-header" data-reveal>
+                <h2>Nuestros <span>Servicios</span></h2>
+                <p style="color: var(--text-gray); max-width: 400px; text-align: right;">Expertos cuidando cada detalle de tu rodado con precisión industrial.</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card" data-reveal>
+                    <div class="service-img">
+                        <img src="service1.png" alt="Servicio de Neumáticos">
+                    </div>
+                    <div class="service-info">
+                        <h3>Neumáticos</h3>
+                        <p>Trabajamos con las marcas líderes del mercado. Venta, colocación y asesoramiento técnico especializado.</p>
+                    </div>
+                </div>
+
+                <div class="service-card" data-reveal>
+                    <div class="service-img">
+                        <img src="service2.png" alt="Alineación y Balanceo">
+                    </div>
+                    <div class="service-info">
+                        <h3>Alineación 3D</h3>
+                        <p>Tecnología láser de alta precisión para asegurar un desgaste parejo y una conducción estable.</p>
+                    </div>
+                </div>
+
+                <div class="service-card" data-reveal>
+                    <div class="service-img">
+                        <img src="service3.png" alt="Suspensión">
+                    </div>
+                    <div class="service-info">
+                        <h3>Suspensión y Tren Delantero</h3>
+                        <p>Revisión exhaustiva y reparación de sistemas de suspensión para tu máxima seguridad.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="nosotros" class="experience">
+            <div class="exp-grid">
+                <div class="exp-text" data-reveal>
+                    <h3>Infraestructura de <span>Primer Nivel</span></h3>
+                    <p style="color: var(--text-gray); line-height: 1.8;">Contamos con un taller equipado con la tecnología más avanzada del país. Nuestro equipo de profesionales se capacita constantemente para brindar soluciones eficientes en el menor tiempo posible.</p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <h4>+15</h4>
+                            <p>Años de Exp.</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>10k</h4>
+                            <p>Clientes Sat.</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>100%</h4>
+                            <p>Garantía</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="exp-visual" data-reveal>
+                    <img src="service1.png" alt="Taller" style="width: 100%; border-radius: 8px; filter: grayscale(1); border: 4px solid var(--primary);">
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section (Dynamic) -->
+        <section id="productos" class="dynamic-sec">
+            <div class="section-header" data-reveal>
+                <h2>Catálogo de <span>Productos</span></h2>
+            </div>
+            
+            <div class="filter-bar" data-reveal>
+                <input type="text" id="productSearch" placeholder="Buscar producto..." class="search-input">
+                <select id="categoryFilter" class="filter-select">
+                    <option value="all">Todas las categorías</option>
+                    <option value="Neumáticos">Neumáticos</option>
+                    <option value="Llantas">Llantas</option>
+                    <option value="Servicios">Servicios</option>
+                </select>
+            </div>
+
+            <div id="products-grid" class="services-grid">
+                <!-- Injected via JS -->
+            </div>
+        </section>
+
+        <section id="contacto" class="contact">
+            <div class="section-header" data-reveal>
+                <h2>Contacto <span>Directo</span></h2>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-info" data-reveal>
+                    <h3 style="margin-bottom: 1.5rem; text-transform: uppercase;">Solicitá tu <span>Presupuesto</span></h3>
+                    <p style="color: var(--text-gray); margin-bottom: 2rem;">Completá el formulario y uno de nuestros asesores técnicos te contactará por WhatsApp a la brevedad.</p>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <i class="fab fa-whatsapp" style="color: #25D366; font-size: 1.5rem;"></i>
+                            <span>Atención Inmediata</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <i class="fas fa-clock" style="color: var(--primary); font-size: 1.2rem;"></i>
+                            <span>Lunes a Viernes 8:00 - 18:00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="whatsappForm" class="contact-form" data-reveal>
+                    <div class="form-group">
+                        <label>Nombre y Apellido</label>
+                        <input type="text" id="formName" required placeholder="Ej: Juan Pérez">
+                    </div>
+                    <div class="form-group">
+                        <label>Vehículo</label>
+                        <input type="text" id="formVehicle" required placeholder="Ej: Toyota Hilux 2022">
+                    </div>
+                    <div class="form-group">
+                        <label>Producto/Servicio de interés</label>
+                        <select id="formInterest">
+                            <option value="General">Consulta General</option>
+                            <option value="Neumáticos">Neumáticos</option>
+                            <option value="Alineación">Alineación y Balanceo</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Mensaje</label>
+                        <textarea id="formMessage" rows="4" placeholder="¿En qué podemos ayudarte?"></textarea>
+                    </div>
+                    <button type="submit" class="cta-btn" style="width: 100%;">Enviar a WhatsApp <i class="fab fa-whatsapp"></i></button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-info">
+                <img src="logo.png" alt="Logo">
+                <p>El centro de servicios automotrices más completo de la región. Calidad, confianza y rapidez en un solo lugar.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Servicios</h4>
+                <ul>
+                    <li><a href="#">Neumáticos</a></li>
+                    <li><a href="#">Alineación</a></li>
+                    <li><a href="#">Balanceo</a></li>
+                    <li><a href="#">Frenos</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Navegación</h4>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Contacto</h4>
+                <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 1rem;">
+                    <i class="fas fa-map-marker-alt" style="color: var(--primary); margin-right: 10px;"></i> Av. Principal 1234, Ciudad<br>
+                    <i class="fas fa-phone" style="color: var(--primary); margin-right: 10px;"></i> +54 9 11 1234 5678<br>
+                    <i class="fas fa-envelope" style="color: var(--primary); margin-right: 10px;"></i> info@autocentro.com
+                </p>
+            </div>
+        </div>
+        <div class="bottom-footer">
+            <p>&copy; 2026 AUTOCENTRO. Todos los derechos reservados.</p>
+            <p>Diseño por Antigravity AI</p>
+        </div>
+    </footer>
+
+    <a href="admin.html" class="admin-badge">Admin Panel</a>
+    <script src="script.js"></script>
+</body>
+</html>

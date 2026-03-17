@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Autocentro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="background: #000;">
+    <header id="header" class="scrolled">
+        <div class="logo">
+            <img src="logo.png" alt="Autocentro Logo">
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+            <span style="font-size: 0.8rem; color: var(--text-gray);">MODO ADMINISTRADOR</span>
+            <a href="index.html" class="cta-btn">Ver Web</a>
+        </div>
+    </header>
+
+    <main class="admin-panel">
+        <div class="admin-header">
+            <h1 style="font-family: 'Outfit'; font-weight: 900; text-transform: uppercase;">Dashboard <span style="color: var(--primary);">Pro</span></h1>
+            <div style="display: flex; gap: 1rem;">
+                <div class="dashboard-stat">
+                    <span id="stat-promos">0</span>
+                    <label>Promociones</label>
+                </div>
+                <div class="dashboard-stat">
+                    <span id="stat-products">0</span>
+                    <label>Productos</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-grid">
+            <!-- Columna Izquierda: Configuración Global y Promos -->
+            <div style="display: flex; flex-direction: column; gap: 2rem;">
+                <section class="admin-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h3 style="margin: 0;">Sección Promos</h3>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="togglePromos">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>Título de la Promo</label>
+                        <input type="text" id="promoTitle" placeholder="Ej: 20% OFF en cubiertas">
+                    </div>
+                    <div class="form-group">
+                        <label>Imagen de Promo</label>
+                        <select id="promoImg">
+                            <option value="service1.png">Neumático Promo</option>
+                            <option value="service2.png">Taller Promo</option>
+                            <option value="service3.png">Frenos Promo</option>
+                        </select>
+                    </div>
+                    <button class="cta-btn" style="width: 100%;" onclick="addPromo()">Publicar Promo</button>
+                    <div id="adminPromosList"></div>
+                </section>
+
+                <section class="admin-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h3 style="margin: 0;">Sección Catálogo</h3>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="toggleProducts">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-gray);">Habilita o deshabilita la visibilidad del catálogo en la página principal.</p>
+                </section>
+            </div>
+
+            <!-- Columna Derecha: Inventario de Productos -->
+            <section class="admin-card">
+                <h3>Gestión de Inventario</h3>
+                <div class="contact-form" style="padding: 1.5rem; margin-bottom: 2rem;">
+                    <div class="input-row">
+                        <div class="form-group">
+                            <label>Nombre del Producto</label>
+                            <input type="text" id="prodTitle" placeholder="Nombre comercial">
+                        </div>
+                        <div class="form-group">
+                            <label>Categoría</label>
+                            <select id="prodCat">
+                                <option value="Neumáticos">Neumáticos</option>
+                                <option value="Llantas">Llantas</option>
+                                <option value="Servicios">Servicios</option>
+                                <option value="Accesorios">Accesorios</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción Corta</label>
+                        <textarea id="prodDesc" rows="2" placeholder="Detalles técnicos rápidos"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Imagen del Producto</label>
+                        <select id="prodImg">
+                            <option value="service1.png">Neumático Standard</option>
+                            <option value="service2.png">Alineación/Taller</option>
+                            <option value="service3.png">Suspensión/Tren</option>
+                        </select>
+                        <p style="font-size: 0.7rem; color: var(--text-gray); margin-top: 5px;">* Usando imágenes internas por defecto</p>
+                    </div>
+                    <button class="cta-btn" style="width: 100%;" onclick="addProduct()">Agregar al Catálogo</button>
+                </div>
+
+                <div id="adminProductsList"></div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Data Management con persistencia mejorada
+        let state = JSON.parse(localStorage.getItem('autocentro_state')) || {
+            promos_active: false,
+            promos: [],
+            products_active: false,
+            products: []
+        };
+
+        function save() {
+            localStorage.setItem('autocentro_state', JSON.stringify(state));
+            render();
+        }
+
+        function render() {
+            document.getElementById('togglePromos').checked = state.promos_active;
+            document.getElementById('toggleProducts').checked = state.products_active;
+            
+            // Actualizar Stats
+            document.getElementById('stat-promos').innerText = state.promos.length;
+            document.getElementById('stat-products').innerText = state.products.length;
+
+            const pList = document.getElementById('adminPromosList');
+            pList.innerHTML = state.promos.map((p, i) => `
+                <div class="promo-item">
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <img src="${p.img}" style="width: 30px; height: 30px; object-fit: cover; border-radius: 2px;">
+                        <span style="font-size: 0.8rem;">${p.title}</span>
+                    </div>
+                    <button class="admin-btn" onclick="removePromo(${i})">✕</button>
+                </div>
+            `).join('');
+
+            const prList = document.getElementById('adminProductsList');
+            prList.innerHTML = state.products.map((p, i) => `
+                <div class="prod-item">
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <img src="${p.img}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;">
+                        <div>
+                            <div style="font-weight: bold; font-size: 0.9rem;">${p.title}</div>
+                            <div style="font-size: 0.7rem; color: var(--primary); text-transform: uppercase;">${p.category}</div>
+                        </div>
+                    </div>
+                    <button class="admin-btn" onclick="removeProduct(${i})">Eliminar</button>
+                </div>
+            `).join('');
+        }
+
+        document.getElementById('togglePromos').onchange = (e) => { state.promos_active = e.target.checked; save(); };
+        document.getElementById('toggleProducts').onchange = (e) => { state.products_active = e.target.checked; save(); };
+
+        function addPromo() {
+            const title = document.getElementById('promoTitle').value;
+            const img = document.getElementById('promoImg').value;
+            if(!title) return;
+            state.promos.push({title, img});
+            document.getElementById('promoTitle').value = '';
+            save();
+        }
+
+        function removePromo(i) {
+            state.promos.splice(i, 1);
+            save();
+        }
+
+        function addProduct() {
+            const title = document.getElementById('prodTitle').value;
+            const desc = document.getElementById('prodDesc').value;
+            const category = document.getElementById('prodCat').value;
+            const img = document.getElementById('prodImg').value;
+
+            if(!title) return;
+            state.products.push({title, desc, category, img});
+            save();
+            
+            document.getElementById('prodTitle').value = '';
+            document.getElementById('prodDesc').value = '';
+        }
+
+        function removeProduct(i) {
+            state.products.splice(i, 1);
+            save();
+        }
+
+        render();
+    </script>
+</body>
+</html>
