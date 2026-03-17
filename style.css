@@ -365,6 +365,27 @@ nav a:hover {
     align-items: start;
 }
 
+@media (max-width: 992px) {
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .admin-header {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: flex-start;
+    }
+
+    .admin-panel {
+        padding: 100px 5% 50px;
+    }
+}
+
+.logo img {
+  height: 60px; /* Logo más grande en Admin */
+  width: auto;
+}
+
 .admin-card {
     background: var(--bg-card);
     padding: 2.5rem;
@@ -653,15 +674,26 @@ input:checked + .slider:before { transform: translateX(30px); }
     margin-top: 2rem;
 }
 
-.close-btn {
-    position: absolute;
-    top: 30px;
-    right: 30px;
-    background: none;
-    border: none;
-    color: var(--primary);
-    font-size: 2rem;
-    cursor: pointer;
+@media (max-width: 480px) {
+    .admin-list-header {
+        display: none !important; /* Hide header on very small screens to save space */
+    }
+    
+    .prod-item, .promo-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .prod-item[style*="grid-template-columns"] {
+        display: flex !important;
+        flex-direction: column;
+        padding: 1.5rem;
+    }
+
+    .admin-btn {
+        width: 100%;
+    }
 }
 
 .footer-grid {
